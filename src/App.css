@@ -1,38 +1,417 @@
-.App {
+body {
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.card-form {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 420px;
+  box-sizing: border-box;
+  position: relative;
+  perspective: 1000px;
+}
+
+.card-front, .card-back {
+  width: 100%;
+  height: 200px;
+  border-radius: 15px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  transition: transform 0.6s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  box-sizing: border-box;
+  color: #fff;
+  background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(45deg, #2575fc 0%, #6a11cb 100%);
+}
+
+.card-form.flipped .card-front {
+  transform: rotateY(-180deg);
+}
+
+.card-form.flipped .card-back {
+  transform: rotateY(0deg);
+}
+
+.card-logo {
+  height: 40px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+  transition: opacity 0.3s ease;
+}
+
+.card-number {
+  font-size: 24px;
+  letter-spacing: 2px;
+  margin-top: 20px;
+  font-weight: 500;
+}
+
+.card-holder-name, .card-expiry {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.card-stripe {
+  background-color: #000;
+  height: 50px;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.card-cvv {
+  background-color: #fff;
+  color: #000;
+  padding: 8px 12px;
+  border-radius: 5px;
+  align-self: flex-end;
+  margin-top: 20px;
+  font-weight: bold;
+  min-width: 40px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+form {
+  margin-top: 230px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.input-container {
+  position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 15px 45px 15px 15px;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background-color: #fff;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #2575fc;
+  box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.1);
+}
+
+.form-group.focused label {
+  color: #2575fc;
+}
+
+.form-group.focused input {
+  border-color: #2575fc;
+  box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.1);
+}
+
+.validation-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+}
+
+.success-icon, .error-icon {
+  font-size: 18px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.success-icon {
+  color: #28a745;
+}
+
+.error-icon {
+  color: #dc3545;
+}
+
+.form-group.valid .success-icon {
+  opacity: 1;
+}
+
+.form-group.invalid .error-icon {
+  opacity: 1;
+}
+
+.form-group.valid input {
+  border-color: #28a745;
+  background-color: #f8fff9;
+}
+
+.form-group.invalid input {
+  border-color: #dc3545;
+  background-color: #fff5f5;
+}
+
+.error-message {
+  display: none;
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-group-col {
+  flex: 1;
+}
+
+button {
+  background: linear-gradient(45deg, #6c757d 0%, #495057 100%);
+  color: #fff;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: not-allowed;
+  font-size: 16px;
+  font-weight: 600;
+  width: 100%;
+  transition: all 0.3s ease;
+  opacity: 0.6;
+}
+
+button.enabled {
+  background: linear-gradient(45deg, #2575fc 0%, #6a11cb 100%);
+  cursor: pointer;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+button.enabled:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
+}
+
+button.enabled:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Success overlay */
+.success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.success-message {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.success-message i {
+  font-size: 48px;
+  color: #28a745;
+  margin-bottom: 20px;
+}
+
+.success-message h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 24px;
+}
+
+.success-message p {
+  margin: 0 0 20px 0;
+  color: #666;
+  font-size: 16px;
+}
+
+.success-message button {
+  background: linear-gradient(45deg, #28a745 0%, #20c997 100%);
+  padding: 12px 30px;
+  font-size: 14px;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.success-message button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+      opacity: 0;
+      transform: translateY(30px);
   }
-  to {
-    transform: rotate(360deg);
+  to { 
+      opacity: 1;
+      transform: translateY(0);
   }
 }
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+  body {
+      padding: 10px;
+  }
+  
+  .card-form {
+      margin: 10px;
+      padding: 20px;
+      max-width: 100%;
+  }
+
+  .card-front, .card-back {
+      height: 180px;
+      padding: 15px;
+  }
+
+  .card-number {
+      font-size: 20px;
+      letter-spacing: 1px;
+  }
+
+  .card-holder-name, .card-expiry {
+      font-size: 14px;
+  }
+
+  form {
+      margin-top: 200px;
+  }
+
+  .form-group input {
+      padding: 12px 40px 12px 12px;
+      font-size: 16px;
+  }
+
+  button {
+      padding: 15px 20px;
+      font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-form {
+      margin: 5px;
+      padding: 15px;
+  }
+
+  .card-front, .card-back {
+      height: 160px;
+      padding: 12px;
+  }
+
+  .card-number {
+      font-size: 18px;
+      letter-spacing: 1px;
+  }
+
+  .card-holder-name, .card-expiry {
+      font-size: 12px;
+  }
+
+  form {
+      margin-top: 180px;
+  }
+  
+  .form-row {
+      flex-direction: column;
+      gap: 10px;
+  }
+  
+  .success-message {
+      margin: 20px;
+      padding: 30px 20px;
+  }
+}
+
+/* Animações suaves */
+.card-front, .card-back {
+  transition: all 0.6s ease;
+}
+
+.form-group {
+  transition: all 0.3s ease;
+}
+
+/* Melhorias visuais */
+.card-logo {
+  transition: opacity 0.3s ease;
+}
+
+.form-group input, .form-group select {
+  transition: all 0.3s ease;
+}
+
+/* Hover effects */
+.form-group:hover input {
+  border-color: #c3d4f0;
+}
+
+.form-group.focused:hover input,
+.form-group.valid:hover input {
+  border-color: #2575fc;
+}
+
+.form-group.invalid:hover input {
+  border-color: #dc3545;
+}
+
