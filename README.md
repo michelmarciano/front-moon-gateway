@@ -31,11 +31,11 @@ Builds the app for production to the `build` folder.
 It correctly bundles React in production mode and optimizes the build for the best performance. The build is minified and the filenames include the hashes.
 
 
-## Vercel
+### Vercel
 
-### Deploy
-### `vercel`
-### `vercel --prod`
+## Deploy
+`vercel`
+`vercel --prod`
 
 ### Link Projeto
 `https://vercel.com/michel-oliveira-marcianos-projects/moon-gateway`
